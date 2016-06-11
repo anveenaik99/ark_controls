@@ -1,4 +1,4 @@
-int16 dx
-int16 dy
-int16 dpsi
-int16 dz
+float32 dx
+float32 dy
+float32 dpsi
+float32 dz
