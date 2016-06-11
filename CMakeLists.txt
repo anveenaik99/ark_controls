@@ -10,7 +10,19 @@ find_package(catkin REQUIRED COMPONENTS
     mavros_msgs
     image_transport
     cv_bridge
+    message_generation
 )
+
+add_message_files(
+  FILES
+  PidErrors.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
 find_package(cmake_modules REQUIRED)
 find_package(Qt4 REQUIRED COMPONENTS QtCore QtGui)
 include(${QT_USE_FILE})
@@ -29,7 +41,9 @@ file(GLOB_RECURSE QT_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINK
 find_package(OpenCV REQUIRED)
 find_package(Eigen REQUIRED)
 
-catkin_package()
+catkin_package(
+    CATKIN_DEPENDS message_runtime
+)
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS} ${Eigen_INCLUDE_DIRS} )
 
