@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
                                                    1,
                                                    &Subscribe_mavros_state::mavrosStateCb,
                                                    &mavros_state);
+    
     Thread_ROS* t_ros = new Thread_ROS(share_memory);
     t_ros->start();
     threadGUI* t_gui = new threadGUI(share_memory, t_ros);
@@ -34,6 +35,7 @@ int main(int argc, char* argv[])
                                                    1,
                                                    &Subscribe_pid_errors::pidErrorsCb,
                                                    &pid_errors);
+
 
     a.connect(&a, SIGNAL(lastWindowClosed()), t_gui->gui, SLOT(on_closed_event()));
 

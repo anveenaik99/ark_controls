@@ -8,20 +8,20 @@ find_package(catkin REQUIRED COMPONENTS
     roscpp
     mavros
     mavros_msgs
+    ark_msgs
     image_transport
     cv_bridge
-    message_generation
 )
 
-add_message_files(
-  FILES
-  PidErrors.msg
-)
+# add_message_files(
+#   FILES
+#   PidErrors.msg
+# )
 
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-)
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
 
 find_package(cmake_modules REQUIRED)
 find_package(Qt4 REQUIRED COMPONENTS QtCore QtGui)
