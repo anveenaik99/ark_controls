@@ -47,10 +47,16 @@ catkin_package(
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS} ${Eigen_INCLUDE_DIRS} )
 
-add_executable(ark_controls ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
+set(build_sources ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
+list(REMOVE_ITEM build_sources src/overrider.cpp)
+
+add_executable(ark_controls ${build_sources})
 message(${catkin_LIBRARIES})
 target_link_libraries(ark_controls ${catkin_LIBRARIES} ${OpenCV_LIBS} ${OpenCV_LIBRARIES} ${Eigen_LIBRARIES}  ${QT_LIBRARIES} ${ROS_LIBRARIES} ${catkin_LIBRARIES})
 add_dependencies(ark_controls ark_controls)
+
+add_executable(overrider src/overrider.cpp)
+target_link_libraries(overrider ${catkin_LIBRARIES})
 
 install(
 	TARGETS ark_controls

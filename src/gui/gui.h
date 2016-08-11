@@ -37,6 +37,9 @@ private:
     void config_RC();
     void config_mode();
 
+    std::vector<int> rc_maxlimits;
+    std::vector<int> rc_minlimits;
+
     QGridLayout* mainLayout;
 
     QLabel* label_mode;

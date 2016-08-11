@@ -87,13 +87,13 @@ void GUI::config_RC()
     QGridLayout* layRC = new QGridLayout();
     boxRC->setLayout(layRC);
 
-    std::vector<int> rc_maxlimits = share_memory->getRC_maxlimits();
-    std::vector<int> rc_minlimits = share_memory->getRC_minlimits();
+    rc_maxlimits = share_memory->getRC_maxlimits();
+    rc_minlimits = share_memory->getRC_minlimits();
 
     channel12 = new RC_Widget(false,
                               rc_maxlimits[0], rc_minlimits[0],
                               rc_maxlimits[1], rc_minlimits[1],
-                              1, -1);
+                              -1, -1);
     channel34 = new RC_Widget(true,
                               rc_maxlimits[2], rc_minlimits[2],
                               rc_maxlimits[3], rc_minlimits[3],

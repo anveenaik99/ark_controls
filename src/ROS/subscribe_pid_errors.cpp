@@ -23,5 +23,11 @@ void Subscribe_pid_errors::pidErrorsCb(const ark_msgs::PidErrorsConstPtr &msg)
         }            
         else this->t_gui->gui->channel34->setYValue(1500);
         // End Alt Pid
+
+        // X PID        
+        // End X PID
+
+        // Y PID
+        // End Y PID        
     }
 }

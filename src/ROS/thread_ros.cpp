@@ -5,7 +5,7 @@ Thread_ROS::Thread_ROS(Shared_Memory* share_memory)
     this->share_memory = share_memory;
 
     ros::NodeHandle n;
-    rc_override_pub = n.advertise< mavros_msgs::OverrideRCIn >("/mavros/rc/override", 10);
+    rc_override_pub = n.advertise< mavros_msgs::OverrideRCIn >("/mavros/rc/override_relay", 10);
     cl_param = n.serviceClient<mavros_msgs::ParamGet>("/mavros/param/get");
     cl_mode = n.serviceClient<mavros_msgs::SetMode>("/mavros/set_mode");
 
