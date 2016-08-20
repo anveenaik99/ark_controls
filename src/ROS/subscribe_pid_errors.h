@@ -14,10 +14,6 @@ public:
     Subscribe_pid_errors(Shared_Memory* shared_memory, threadGUI* t_gui);
     void pidErrorsCb(const ark_msgs::PidErrorsConstPtr &msg);
 
-private:
-    Shared_Memory* shared_memory;
-    threadGUI* t_gui;
-
     float kpx;
     float kix;
     float kdx;
@@ -31,14 +27,20 @@ private:
     float vmax_x;
     float vmax_y;
     float inr;
-
-
-    float prev_time;
     float x3;
     float y3;
+
+private:
+    Shared_Memory* shared_memory;
+    threadGUI* t_gui;
+
+    float prev_time;
     float sumerrorvx;
     float sumerrorvy;
     float preverrorvx;
     float preverrorvy;
+    float targetv_x;
+    float targetv_y;
+    float cout_prev_time;
 };
 #endif // SUBSCRIBE_PID_ERRORS_H

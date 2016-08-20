@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
     ark_msgs
     image_transport
     cv_bridge
+    dynamic_reconfigure
 )
 
 # add_message_files(
@@ -22,6 +23,12 @@ find_package(catkin REQUIRED COMPONENTS
 #   DEPENDENCIES
 #   std_msgs
 # )
+
+## Generate dynamic reconfigure parameters in the 'cfg' folder
+generate_dynamic_reconfigure_options(
+  cfg/Variables.cfg
+)
+
 
 find_package(cmake_modules REQUIRED)
 find_package(Qt4 REQUIRED COMPONENTS QtCore QtGui)
