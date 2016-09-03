@@ -48,6 +48,14 @@ void GUI::keyPressEvent(QKeyEvent *e)
 {
     if(e->key()==Qt::Key_O)
         check_override->setChecked(!check_override->isChecked());
+    else if(e->key()==Qt::Key_L)
+        share_memory->setModeChange(std::string("LAND"));
+    else if(e->key()==Qt::Key_S)
+        share_memory->setModeChange(std::string("STABILIZE"));
+    else if(e->key()==Qt::Key_A)
+        share_memory->setModeChange(std::string("ALT_HOLD"));
+    else if(e->key()==Qt::Key_C)
+        check_shared_control->setChecked(!check_shared_control->isChecked());
     std::cout << "keyPressEvent" << std::endl;
 
 }
@@ -93,7 +101,7 @@ void GUI::config_RC()
     channel12 = new RC_Widget(false,
                               rc_maxlimits[0], rc_minlimits[0],
                               rc_maxlimits[1], rc_minlimits[1],
-                              -1, -1);
+                              1, -1);
     channel34 = new RC_Widget(true,
                               rc_maxlimits[2], rc_minlimits[2],
                               rc_maxlimits[3], rc_minlimits[3],

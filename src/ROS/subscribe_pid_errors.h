@@ -7,6 +7,8 @@
 
 #include "../shared_memory.h"
 #include "../gui/threadgui.h"
+#include <sys/time.h>
+#include <iostream>
 
 class Subscribe_pid_errors
 {
@@ -20,6 +22,9 @@ public:
     float kpy;
     float kiy;
     float kdy;
+    float kppsi;
+    float kipsi;
+    float kdpsi;
     float accelmax_x;
     float accelmax_y;
     float deaccelmax_x;
@@ -34,13 +39,22 @@ private:
     Shared_Memory* shared_memory;
     threadGUI* t_gui;
 
-    float prev_time;
+    long prev_time;
     float sumerrorvx;
     float sumerrorvy;
+    float sumerrorpsi;
     float preverrorvx;
     float preverrorvy;
+    float preverrorpsi;
     float targetv_x;
     float targetv_y;
-    float cout_prev_time;
+    long cout_prev_time;
+
+    int channel12y_mid;
+    int channel12x_mid;
+    int channel34y_mid;
+    int channel34x_mid;
+
+    long getMilliSecs();
 };
 #endif // SUBSCRIBE_PID_ERRORS_H

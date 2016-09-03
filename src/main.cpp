@@ -17,6 +17,9 @@ void dr_callback(ark_controls::VariablesConfig &config, uint32_t level, Subscrib
     pid_errors->kpy = config.kpy;
     pid_errors->kiy = config.kiy;
     pid_errors->kdy = config.kdy;
+    pid_errors->kppsi = config.kppsi;
+    pid_errors->kipsi = config.kipsi;
+    pid_errors->kdpsi = config.kdpsi;
     pid_errors->accelmax_x = config.accelmax_x;
     pid_errors->accelmax_y = config.accelmax_y;
     pid_errors->deaccelmax_x = config.deaccelmax_x;

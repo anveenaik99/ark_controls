@@ -31,14 +31,13 @@ public:
     bool getEnd_thread();
     RC_Widget* channel12;
     RC_Widget* channel34;
+    std::vector<int> rc_maxlimits;
+    std::vector<int> rc_minlimits;
 
 private:
     Shared_Memory* share_memory;
     void config_RC();
     void config_mode();
-
-    std::vector<int> rc_maxlimits;
-    std::vector<int> rc_minlimits;
 
     QGridLayout* mainLayout;
 
