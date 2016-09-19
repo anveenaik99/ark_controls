@@ -15,11 +15,12 @@ GUI::GUI(Shared_Memory *share_memory, Thread_ROS* t_ros)
 
     setVisible(true);
 
+    record_pid = false;
     connect(this, SIGNAL(signal_updateGUI()), this, SLOT(on_updateGUI_recieved()));
 
     show();
-//    setAttribute(Qt::WA_DeleteOnClose);
-//    setAttribute(Qt::WA_QuitOnClose);
+    //    setAttribute(Qt::WA_DeleteOnClose);
+    //    setAttribute(Qt::WA_QuitOnClose);
     end_thread = false;
 
     connect(this, SIGNAL(destroyed(QObject*)), this, SLOT(on_closed_event()));
@@ -44,6 +45,10 @@ bool GUI::getEnd_thread()
     return end_thread;
 }
 
+void GUI::set_check_shared_control(bool state){
+    check_shared_control->setChecked(state);
+}
+
 void GUI::keyPressEvent(QKeyEvent *e)
 {
     if(e->key()==Qt::Key_O)
@@ -56,6 +61,9 @@ void GUI::keyPressEvent(QKeyEvent *e)
         share_memory->setModeChange(std::string("ALT_HOLD"));
     else if(e->key()==Qt::Key_C)
         check_shared_control->setChecked(!check_shared_control->isChecked());
+    else if(e->key()==Qt::Key_P)
+        record_pid = !record_pid;
+        std::cout << "Record_PID" << std::endl;
     std::cout << "keyPressEvent" << std::endl;
 
 }

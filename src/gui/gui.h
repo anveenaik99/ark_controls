@@ -29,10 +29,12 @@ public:
     ~GUI();
     void updateThreadGUI();
     bool getEnd_thread();
+    void set_check_shared_control(bool state);
     RC_Widget* channel12;
     RC_Widget* channel34;
     std::vector<int> rc_maxlimits;
     std::vector<int> rc_minlimits;
+    bool record_pid;
 
 private:
     Shared_Memory* share_memory;

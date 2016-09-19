@@ -60,7 +60,7 @@ list(REMOVE_ITEM build_sources src/overrider.cpp)
 add_executable(ark_controls ${build_sources})
 message(${catkin_LIBRARIES})
 target_link_libraries(ark_controls ${catkin_LIBRARIES} ${OpenCV_LIBS} ${OpenCV_LIBRARIES} ${Eigen_LIBRARIES}  ${QT_LIBRARIES} ${ROS_LIBRARIES} ${catkin_LIBRARIES})
-add_dependencies(ark_controls ark_controls)
+#add_dependencies(ark_controls ark_controls)
 
 add_executable(overrider src/overrider.cpp)
 target_link_libraries(overrider ${catkin_LIBRARIES})

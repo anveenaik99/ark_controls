@@ -53,12 +53,10 @@ void Subscribe_pid_errors::pidErrorsCb(const ark_msgs::PidErrorsConstPtr &msg)
         channel12x_mid = ((this->t_gui->gui->rc_maxlimits[1] - this->t_gui->gui->rc_minlimits[1]) / 2 ) + this->t_gui->gui->rc_minlimits[1];
         channel34y_mid = ((this->t_gui->gui->rc_maxlimits[2] - this->t_gui->gui->rc_minlimits[2]) / 2 ) + this->t_gui->gui->rc_minlimits[2];
         channel34x_mid = ((this->t_gui->gui->rc_maxlimits[3] - this->t_gui->gui->rc_minlimits[3]) / 2 ) + this->t_gui->gui->rc_minlimits[3];
-
-        std::cout<<channel12y_mid << "," << channel12x_mid << "," << channel34y_mid << "," << channel34x_mid << std::endl;
         return;
     }
     double del_time = (current_time - prev_time)/1000.0;
-    if (this->shared_memory->getSharedControl() && this->shared_memory->getOverride())
+    if (this->shared_memory->getSharedControl() && this->shared_memory->getOverride()) //this->shared_memory->getSharedControl() &&
     {        
         float errorx = msg->dx;
         float errory = msg->dy;
@@ -105,7 +103,7 @@ void Subscribe_pid_errors::pidErrorsCb(const ark_msgs::PidErrorsConstPtr &msg)
             else targetv_x = vmax_x;
             targetv_x = targetv_x * x_direction;
             r_vx_target = targetv_x;
-            if (fabs(targetv_x - velx) > accelmax_x * del_time) targetv_x = accelmax_x * x_direction * del_time + velx;            
+            //if (fabs(targetv_x - velx) > accelmax_x * del_time) targetv_x = accelmax_x * x_direction * del_time + velx;            
         }
         if (errory < inr)
         {
@@ -122,7 +120,7 @@ void Subscribe_pid_errors::pidErrorsCb(const ark_msgs::PidErrorsConstPtr &msg)
             else targetv_y = vmax_y;
             targetv_y = targetv_y * y_direction;
             r_vy_target = targetv_y;
-            if (fabs(targetv_y - vely) > accelmax_y * del_time) targetv_y = accelmax_y * y_direction * del_time + vely;
+            //if (fabs(targetv_y - vely) > accelmax_y * del_time) targetv_y = accelmax_y * y_direction * del_time + vely;
         }
 
         float errorvx = targetv_x - velx;
@@ -132,52 +130,50 @@ void Subscribe_pid_errors::pidErrorsCb(const ark_msgs::PidErrorsConstPtr &msg)
         // Alt PID
         if (fabs(errorz) > 0.2)
         {
-            if (errorz > 0) this->t_gui->gui->channel34->setYValue(channel34y_mid - 100);
-            else if (errorz < 0) this->t_gui->gui->channel34->setYValue(channel34y_mid + 100);
+            //if (errorz > 0) this->t_gui->gui->channel34->setYValue(channel34y_mid - 100);
+            //else if (errorz < 0) this->t_gui->gui->channel34->setYValue(channel34y_mid + 100);
         }            
-        else this->t_gui->gui->channel34->setYValue(channel34y_mid);
+        //else this->t_gui->gui->channel34->setYValue(channel34y_mid);
         // End Alt Pid
 
         // Alt YAW
+        int channelx_limit = 100;
         if (fabs(errorpsi) > 0.1)
         {
             float PIDpsi = channel34x_mid - (kppsi * errorpsi + kipsi * sumerrorpsi + (kdpsi * (preverrorpsi - errorpsi)));
-            if(PIDpsi>(channel34x_mid + 200)) PIDpsi = channel34x_mid + 200;
-            if(PIDpsi<(channel34x_mid - 200)) PIDpsi = channel34x_mid - 200;
-            this->t_gui->gui->channel34->setXValue(PIDpsi);
+            if(PIDpsi>(channel34x_mid + channelx_limit)) PIDpsi = channel34x_mid + channelx_limit;
+            if(PIDpsi<(channel34x_mid - channelx_limit)) PIDpsi = channel34x_mid - channelx_limit;
+            //this->t_gui->gui->channel34->setXValue(PIDpsi);
             //std::cout<<PIDvx<<std::endl;
             sumerrorpsi = sumerrorpsi + errorpsi;
             preverrorpsi = errorpsi;
         }            
-        else this->t_gui->gui->channel34->setXValue(channel34x_mid);
+        //else this->t_gui->gui->channel34->setXValue(channel34x_mid);
         // End Alt Pid
 
+
         // X PID
+        int channely_limit = 100;
         if (fabs(errorvx) > 0)
         {
             float PIDvx = (kpx*errorvx + kix*sumerrorvx + (kdx*(preverrorvx - errorvx))) + channel12y_mid;
-            if(PIDvx>(channel12y_mid + 200)) PIDvx = channel12y_mid + 200;
-            if(PIDvx<(channel12y_mid - 200)) PIDvx = channel12y_mid - 200;
+            //if (this->t_gui->gui->record_pid) std::cout<<"X_x.csv,"<<errorvx<<","<<sumerrorvx<<","<<(preverrorvx - errorvx)<<std::endl;
+            //if (this->t_gui->gui->record_pid) std::cout<<"Y_x.csv,"<<this->t_gui->gui->channel12->getYaxis()<<",0"<<std::endl;
+            if(PIDvx>(channel12y_mid + channely_limit)) PIDvx = channel12y_mid + channely_limit;
+            if(PIDvx<(channel12y_mid - channely_limit)) PIDvx = channel12y_mid - channely_limit;
             this->t_gui->gui->channel12->setYValue(PIDvx);
-            //std::cout<<PIDvx<<std::endl;
             sumerrorvx = sumerrorvx + errorvx;
             preverrorvx = errorvx;
         }
         else this->t_gui->gui->channel12->setYValue(channel12y_mid);
-
-        if(current_time - cout_prev_time > 0.5)
-        {
-            std::cout<<targetv_x<<","<<velx<<","<<r_vx_target<<","<<errorvx<<","<<kpx<<std::endl;
-            cout_prev_time = current_time;
-        }
-        
-        //else this->t_gui->gui->channel12->setYValue(1500);
         // end X PID
 
         // Y PID
         if (fabs(errorvy) > 0)
         {
             float PIDvy = (kpy*errorvy + kiy*sumerrorvy + (kdy*(preverrorvy - errorvy))) + channel12x_mid;
+            //if (this->t_gui->gui->record_pid) std::cout<<"X_y.csv,"<<errorvy<<","<<sumerrorvy<<","<<(preverrorvy - errorvy)<<std::endl;
+            //if (this->t_gui->gui->record_pid) std::cout<<"Y_y.csv,"<<this->t_gui->gui->channel12->getXaxis()<<",0"<<std::endl;
             if(PIDvy>(channel12x_mid + 200)) PIDvy = channel12x_mid + 200;
             if(PIDvy<(channel12x_mid - 200)) PIDvy = channel12x_mid - 200;
             this->t_gui->gui->channel12->setXValue(PIDvy);
@@ -186,7 +182,15 @@ void Subscribe_pid_errors::pidErrorsCb(const ark_msgs::PidErrorsConstPtr &msg)
         }   
         else this->t_gui->gui->channel12->setXValue(channel12x_mid);
         // end Y PID
-        // Clean Up          
+
+        if(current_time - cout_prev_time > 0.5 && !this->t_gui->gui->record_pid)
+        {
+            std::cout<<targetv_x<<","<<velx<<","<<r_vx_target<<","<<errorvx<<","<<kpx<<std::endl;
+            cout_prev_time = current_time;
+        }
+
+
     }
-    prev_time = current_time; 
+    // Clean Up
+    prev_time = current_time;
 }

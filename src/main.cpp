@@ -7,6 +7,7 @@
 #include "ROS/mavros_setstreamrate.h"
 #include "ROS/subscribe_mavros_state.h"
 #include "ROS/subscribe_pid_errors.h"
+#include "ROS/subscribe_joystick.h"
 #include <dynamic_reconfigure/server.h>
 #include <ark_controls/VariablesConfig.h>
 
@@ -58,6 +59,12 @@ int main(int argc, char* argv[])
                                                    1,
                                                    &Subscribe_pid_errors::pidErrorsCb,
                                                    &pid_errors);
+
+    Subscribe_joystick joystick(share_memory, t_gui);
+    ros::Subscriber joystick_sub = n.subscribe("/mavros/rc/joystick",
+                                                   1,
+                                                   &Subscribe_joystick::joystickCb,
+                                                   &joystick);
 
     dynamic_reconfigure::Server<ark_controls::VariablesConfig> server;
     dynamic_reconfigure::Server<ark_controls::VariablesConfig>::CallbackType f;
