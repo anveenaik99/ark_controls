@@ -49,10 +49,6 @@ Pixhawk is Nuttx based hardware. So we need to install the following dependencie
 ```   python-empy  -y ```
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 5b47f3d... Update README.md
 We require arm-none-eabi toolchain version 4.9 or 5.4. So remove arm-none-eabi toolchain if it’s not the required version using:
 
 ``` sudo apt-get remove gcc-arm-none-eabi gdb-arm-none-eabi binutils-arm-none-eabi gcc-arm-embedded```
@@ -99,10 +95,7 @@ For v5.4
 
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 5b47f3d... Update README.md
 ### Installing Qgroundcontrol
 
 Download the tar.gz from Github
@@ -243,7 +236,7 @@ If you're building directly on the Pi, you will want the native build target (po
 
 
 The "px4" executable file is in the directory build_posix_rpi_native/src/firmware/posix. Run it directly with:
-<<<<<<< HEAD
+
 
 ``` sudo ./build_posix_rpi_native/src/firmware/posix/px4 ./posix-configs/rpi/px4.config ```
 
@@ -326,12 +319,8 @@ To run SITL wrapped in ROS the ROS environment needs to be updated, then launch 
 Include one of the above mentioned launch files in your own launch file to run your ROS application in the simulation.
 
 
-<<<<<<< HEAD
-#### HITL Simulation
-=======
-
 ### HITL Simulation
->>>>>>> 5b47f3d... Update README.md
+
 
 PX4 supports HITL for multicopters (using jMAVSim) and fixed wing (using X-Plane demo or full).
 
@@ -354,11 +343,7 @@ Then run QGroundControl and connect via default UDP configuration.
 Widgets -> HIL Config, then select X-Plane 10 in the drop-down and hit connect. Once the system is connected, battery status, GPS status and aircraft position should all become valid
 
 
-<<<<<<< HEAD
-=======
 
-#### Opening system console and shell
->>>>>>> 5b47f3d... Update README.md
 
 #### Opening system console and shell
 
